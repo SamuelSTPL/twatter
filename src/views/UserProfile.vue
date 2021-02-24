@@ -25,27 +25,20 @@
 <script>
 import TwaatItem from "../components/TwaatItem";
 import CreateTwaatPanel from "../components/reateTwaatPanel";
-import { reactive } from "vue";
+import { useRoute } from "vue-router";
+import { users } from "../assets/users";
+import { reactive, computed } from "vue";
 
 export default {
   name: "UserProfile",
   components: { TwaatItem, CreateTwaatPanel },
   setup() {
+    const route = useRoute();
+    const userId = computed(() => route.params.userId);
+
     const state = reactive({
       followers: 0,
-      user: {
-        id: 1,
-        username: "_tha_twat",
-        firstName: "Samuel",
-        lastName: "STPL",
-        email: "samuelstpierrelariviere@gmail.com",
-        isAdmin: true,
-        twaats: [
-          { id: 1, content: "I am a twat" },
-          { id: 2, content: "I am a massive faggot" },
-          { id: 3, content: "Gimmie tha cocks" }
-        ]
-      }
+      user: users[userId.value - 1] || users[0]
     });
 
     const addTwaat = (twaat) => {
@@ -56,7 +49,8 @@ export default {
     };
     return {
       state,
-      addTwaat
+      addTwaat,
+      userId
     };
   }
 };

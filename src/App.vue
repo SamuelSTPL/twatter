@@ -1,16 +1,20 @@
 <template>
   <div class="app">
-    <UserProfile />
+    <nav>
+      <router-link to="/">
+        <div class="navigation__logo">Twatter</div>
+      </router-link>
+      <div class="navigation__user">{{ state.user.username }}</div>
+    </nav>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
 import { reactive } from "vue";
-import UserProfile from "./components/UserProfile";
 
 export default {
   name: "App",
-  components: { UserProfile },
   setup() {
     const state = reactive({
       user: {
